@@ -1,12 +1,13 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Login extends JFrame {
+public class Login extends JFrame implements ActionListener {
     JTextField uid_input = new JTextField();
-    JTextField password_input = new JTextField();
+    JPasswordField password_input = new JPasswordField();
     JButton login_button = new JButton("Login");
     JButton signup_button = new JButton("Sign Up");
     Login(){
@@ -106,6 +107,14 @@ public class Login extends JFrame {
 
 
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==login_button){
+
+        }
+    }
+
     public static void main(String[] args) {
      new Login();
     }
