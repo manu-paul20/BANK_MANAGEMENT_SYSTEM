@@ -143,7 +143,7 @@ public class Login extends JFrame implements ActionListener {
                 String user_pass = resultSet.getString("password");
                 String user_name = resultSet.getString("user_name");
                 resultSet.close();
-                System.out.println("Connection closed");;
+                System.out.println("Connection closed");
                 return (user_pass.equals(password)) ? user_name : "NOT_FOUND";
             }
             resultSet.close();
