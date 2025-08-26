@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class SignUp extends JFrame implements ActionListener {
 
@@ -13,12 +14,13 @@ public class SignUp extends JFrame implements ActionListener {
     JTextField nameInput = new JTextField();
     JTextField addressInput = new JTextField();
     JTextField passwordInput = new JTextField();
-    JTextField userIDInput = new JTextField();
+    JLabel userIDInput = new JLabel();
     JTextField mobileNumberInput = new JTextField();
     JTextField initialAmountInput = new JTextField();
     JRadioButton currentAccount = new JRadioButton("Current");
     JRadioButton savingsAccount = new JRadioButton("Savings");
     JLabel message = new JLabel("Please note user id for future use");
+    String userId;
     SignUp(){
         setVisible(true);
         setLocation(400,40);
@@ -65,27 +67,12 @@ public class SignUp extends JFrame implements ActionListener {
         passwordInput.setFont(TEXT_FONT);
         add(passwordInput);
 
-        JLabel userIDText = new JLabel("User ID");
-        userIDText.setBounds(10,330,100,20);
-        userIDText.setFont(TEXT_FONT);
-        add(userIDText);
-
-        // user id input
-        userIDInput.setBounds(90,330,INPUT_AREA_WIDTH,INPUT_AREA_HEIGHT);
-        userIDInput.setFont(TEXT_FONT);
-        userIDInput.setEnabled(true);
+        // user id text
+        userIDInput.setBounds(230,380,360,100);
+        userIDInput.setFont(new Font("Araial black",Font.BOLD,50));
+        userIDInput.setVisible(false);
+        userIDInput.setBorder(BorderFactory.createLineBorder(Color.RED,2));
         userIDInput.setForeground(Color.red);
-        userIDInput.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                userIDInput.setEnabled(false);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                userIDInput.setEnabled(true);
-            }
-        });
         add(userIDInput);
 
         JLabel mobileNumberText = new JLabel("Mobile Number");
@@ -109,18 +96,18 @@ public class SignUp extends JFrame implements ActionListener {
         add(initialAmountInput);
 
         JLabel accountTypeText = new JLabel("Account Type : ");
-        accountTypeText.setBounds(10,410,200,30);
+        accountTypeText.setBounds(10,330,200,30);
         accountTypeText.setFont(TEXT_FONT);
         add(accountTypeText);
 
         //account type
 
        //savings account
-        savingsAccount.setBounds(180,420,100,20);
+        savingsAccount.setBounds(180,335,100,20);
         add(savingsAccount);
 
       // current account
-        currentAccount.setBounds(300,420,150,20);
+        currentAccount.setBounds(300,335,150,20);
         add(currentAccount);
 
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -146,17 +133,26 @@ public class SignUp extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==submitButton){
-            if(submitButton.getText() == "Generate User ID" && validateUserDetails() && !(isUserExists(mobileNumberInput.getText()))){
+            if(submitButton.getText().equals("Generate User ID") && validateUserDetails() && !(isUserExists("mobile_number",mobileNumberInput.getText()))){
                 //generating a user id until a random user id is generated
                 String userId;
                 do{
                     userId = generateUserId();
-                }while (isUserExists(userId));
-                userIDInput.setText(userId);
+                }while (isUserExists("user_id",userId));
+                userIDInput.setVisible(true);
+                userIDInput.setText("User ID = "+userId);
+                this.userId = userId;
                 message.setVisible(true);
                 submitButton.setText("Submit");
             }
             else if(submitButton.getText() == "Submit"){
+                    if(addUser()){
+                        try {
+                            connection.connection.close();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
 
             }else{
                 JOptionPane.showMessageDialog(
@@ -169,6 +165,28 @@ public class SignUp extends JFrame implements ActionListener {
         }
     }
 
+    public boolean addUser(){
+        String address = addressInput.getText();
+        String userName = nameInput.getText();
+        long mobileNumber = Long.parseLong(mobileNumberInput.getText());
+        String accountType = (savingsAccount.isSelected())? "Savings" : "Current";
+        Long initialAmount = Long.parseLong(initialAmountInput.getText());
+        String password = passwordInput.getText();
+
+        String userQuery = "INSERT INTO users(user_id,user_name,password) VALUES ('"+userId+"','"+userName+"','"+password+"')";
+        String userDetailsQuery = "INSERT INTO user_details(user_id,address,mobile_number,account_type,amount) VALUES ('"+userId+"','"+address+"',"+mobileNumber+",'"+accountType+"',"+initialAmount+")";
+        try{
+            connection.statement.executeUpdate(userQuery);
+            connection.statement.executeUpdate(userDetailsQuery);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,"Something went wrong\nPlease check all details");
+            return false;
+        }
+    }
+
     // check if all the fields are filled or not
     public boolean validateUserDetails(){
         boolean isFilled =
@@ -178,12 +196,22 @@ public class SignUp extends JFrame implements ActionListener {
                 !mobileNumberInput.getText().isBlank() &&
                 !initialAmountInput.getText().isBlank() &&
                 (savingsAccount.isSelected() || currentAccount.isSelected());
-        return isFilled;
+        if(isFilled){
+            try {
+                Long.parseLong(mobileNumberInput.getText());
+                Long.parseLong(initialAmountInput.getText());
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
     }
 
     // checking if user already exist in the database or not
-    public boolean isUserExists(String searchParameter){
-        String query = "SELECT * FROM user_details WHERE mobile_number = '"+searchParameter+"'";
+    public boolean isUserExists(String searchParameterName,String searchParameterValue){
+        String query = "SELECT * FROM user_details WHERE "+searchParameterName+" = '"+searchParameterValue+"'";
+        System.out.println(query);
         ResultSet rs ;
         try{
            rs = connection.statement.executeQuery(query);
@@ -202,10 +230,10 @@ public class SignUp extends JFrame implements ActionListener {
     public String generateUserId(){
         String alphabets = "abcdefghijklmnopqrstuvwxyz";
         String nums = "1234567890";
-        int n1 = (int)(Math.random()*27);
-        int n2 = (int)(Math.random()*27);
-        int n3 = (int)(Math.random()*11);
-        int n4 = (int)(Math.random()*11);
+        int n1 = (int)(Math.random()*26);
+        int n2 = (int)(Math.random()*26);
+        int n3 = (int)(Math.random()*10);
+        int n4 = (int)(Math.random()*10);
         return ""+alphabets.charAt(n1)+alphabets.charAt(n2)+nums.charAt(n3)+nums.charAt(n4);
     }
 
