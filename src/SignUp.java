@@ -20,6 +20,7 @@ public class SignUp extends JFrame implements ActionListener {
     JLabel message = new JLabel("Please note user id for future use");
     String userId;
     SignUp(){
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         setLocation(400,40);
         setSize(800,700);
@@ -146,6 +147,8 @@ public class SignUp extends JFrame implements ActionListener {
             } else if(submitButton.getText() == "Submit"){
                     if(addUser()){ // closing the connection if user added successfully
                         try {
+                            setVisible(false);
+                            new Confirmation(); // leading to confirmation page
                             connection.connection.close();
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);
@@ -232,9 +235,5 @@ public class SignUp extends JFrame implements ActionListener {
         int n3 = (int)(Math.random()*10);
         int n4 = (int)(Math.random()*10);
         return ""+alphabets.charAt(n1)+alphabets.charAt(n2)+nums.charAt(n3)+nums.charAt(n4);
-    }
-
-    public static void main(String[] args) {
-        new SignUp();
     }
 }
