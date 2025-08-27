@@ -12,6 +12,7 @@ public class Login extends JFrame implements ActionListener {
     JButton login_button = new JButton("Login");
     JButton signup_button = new JButton("Sign Up");
     Login(){
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
        setVisible(true);
        setLocation(400,40);
        setSize(800,500);
@@ -80,20 +81,15 @@ public class Login extends JFrame implements ActionListener {
         //sign up button
         signup_button.setBounds(500,300,100,50);
         signup_button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        signup_button.setBackground(Color.blue);
-        signup_button.setForeground(Color.white);
         signup_button.addActionListener(this);
+        signup_button.setBackground(Color.BLUE);
+        signup_button.setForeground(Color.WHITE);
         signup_button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 signup_button.setBackground(Color.WHITE);
+                signup_button.setForeground(Color.black);
                 signup_button.setBorder(BorderFactory.createLineBorder(Color.BLUE,5));
-                if(uid_input.getText().isBlank() && password_input.getText().isBlank()){
-                    signup_button.setBounds(500,300,150,50);
-                    signup_button.setText("Fill all fields");
-                    signup_button.setEnabled(false);
-                    signup_button.setForeground(Color.black);
-                }
             }
 
             @Override
@@ -125,9 +121,11 @@ public class Login extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE
                 );
             }else{
-                String message = "Welcome "+result;
-                JOptionPane.showMessageDialog(null,message);
+                System.out.println("Welome");
             }
+        }
+        if(e.getSource() == signup_button){
+            new SignUp();
         }
     }
 
