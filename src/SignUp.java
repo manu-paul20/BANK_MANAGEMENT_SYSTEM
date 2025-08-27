@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -68,10 +66,9 @@ public class SignUp extends JFrame implements ActionListener {
         add(passwordInput);
 
         // user id text
-        userIDInput.setBounds(230,380,360,100);
+        userIDInput.setBounds(230,380,400,100);
         userIDInput.setFont(new Font("Araial black",Font.BOLD,50));
         userIDInput.setVisible(false);
-        userIDInput.setBorder(BorderFactory.createLineBorder(Color.RED,2));
         userIDInput.setForeground(Color.red);
         add(userIDInput);
 
@@ -144,9 +141,10 @@ public class SignUp extends JFrame implements ActionListener {
                 this.userId = userId;
                 message.setVisible(true);
                 submitButton.setText("Submit");
-            }
-            else if(submitButton.getText() == "Submit"){
-                    if(addUser()){
+            }else if(isUserExists("mobile_number",mobileNumberInput.getText())){
+                JOptionPane.showMessageDialog(null,"User already exist");
+            } else if(submitButton.getText() == "Submit"){
+                    if(addUser()){ // closing the connection if user added successfully
                         try {
                             connection.connection.close();
                         } catch (SQLException ex) {
@@ -165,31 +163,31 @@ public class SignUp extends JFrame implements ActionListener {
         }
     }
 
+// adding user to DB
     public boolean addUser(){
         String address = addressInput.getText();
         String userName = nameInput.getText();
-        long mobileNumber = Long.parseLong(mobileNumberInput.getText());
+        String mobileNumber = mobileNumberInput.getText();
         String accountType = (savingsAccount.isSelected())? "Savings" : "Current";
         Long initialAmount = Long.parseLong(initialAmountInput.getText());
         String password = passwordInput.getText();
 
         String userQuery = "INSERT INTO users(user_id,user_name,password) VALUES ('"+userId+"','"+userName+"','"+password+"')";
-        String userDetailsQuery = "INSERT INTO user_details(user_id,address,mobile_number,account_type,amount) VALUES ('"+userId+"','"+address+"',"+mobileNumber+",'"+accountType+"',"+initialAmount+")";
+        String userDetailsQuery = "INSERT INTO user_details(user_id,address,mobile_number,account_type,amount) VALUES ('"+userId+"','"+address+"','"+mobileNumber+"','"+accountType+"',"+initialAmount+")";
         try{
             connection.statement.executeUpdate(userQuery);
             connection.statement.executeUpdate(userDetailsQuery);
-            return true;
+            return true; // if user added successfully
         }
         catch (Exception e){
             System.out.println(e);
-            JOptionPane.showMessageDialog(null,"Something went wrong\nPlease check all details");
-            return false;
+            return false; // if user is not added successfully
         }
     }
 
     // check if all the fields are filled or not
     public boolean validateUserDetails(){
-        boolean isFilled =
+        boolean isFilled = // checking is all fields are filled or not
                 !nameInput.getText().isBlank() &&
                 !passwordInput.getText().isBlank() &&
                 !addressInput.getText().isBlank() &&
@@ -198,9 +196,9 @@ public class SignUp extends JFrame implements ActionListener {
                 (savingsAccount.isSelected() || currentAccount.isSelected());
         if(isFilled){
             try {
-                Long.parseLong(mobileNumberInput.getText());
-                Long.parseLong(initialAmountInput.getText());
-                return true;
+                Long.parseLong(mobileNumberInput.getText()); // checking if mobile number is a valid number or not
+                Long.parseLong(initialAmountInput.getText()); // checking if initial amount is valid or not
+                return mobileNumberInput.getText().length() == 10; // checking if mobile number length is 10 or not
             } catch (Exception e) {
                 return false;
             }
@@ -211,7 +209,6 @@ public class SignUp extends JFrame implements ActionListener {
     // checking if user already exist in the database or not
     public boolean isUserExists(String searchParameterName,String searchParameterValue){
         String query = "SELECT * FROM user_details WHERE "+searchParameterName+" = '"+searchParameterValue+"'";
-        System.out.println(query);
         ResultSet rs ;
         try{
            rs = connection.statement.executeQuery(query);
