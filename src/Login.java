@@ -121,11 +121,13 @@ public class Login extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE
                 );
             }else{
-                System.out.println("Welome");
+                new MainScreen(result,user_id);
+                setVisible(false);
             }
         }
         if(e.getSource() == signup_button){
             new SignUp();
+            setVisible(false);
         }
     }
 
