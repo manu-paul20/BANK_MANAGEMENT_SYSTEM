@@ -1,4 +1,9 @@
-package PACKAGE_NAME;
-
 public class UpdateAccount {
+    UpdateAccount(){
+
+    }
+
+    public static void main(String[] args) {
+
+    }
 }
