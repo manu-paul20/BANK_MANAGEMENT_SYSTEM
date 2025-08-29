@@ -20,9 +20,9 @@ public class MainScreen extends JFrame{
         setBackground(Color.WHITE);
         setLayout(null);
 
-        JLabel Greeting_Message = new JLabel("Welcome "+User_Name);
+        JLabel Greeting_Message = new JLabel("Welcome, "+User_Name);
         Greeting_Message.setFont(new Font("Arial Black", Font.BOLD,30));
-        Greeting_Message.setBounds(280,10,500,60);
+        Greeting_Message.setBounds(270,10,500,60);
         add(Greeting_Message);
 
         JLabel Message = new JLabel("Please select from below");
@@ -36,7 +36,7 @@ public class MainScreen extends JFrame{
         Account_Details_Button.setBounds(80,150,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Account_Details_Button.setBackground(Color.BLUE);
         Account_Details_Button.setForeground(Color.white);
-        Account_Details_Button.addActionListener(e -> {new AccountDetails();});
+        Account_Details_Button.addActionListener(e -> {new AccountDetails("Manu",User_ID);});
         add(Account_Details_Button);
 
         Balance_Enquiry_Button.setFont(DEFAULT_BUTTON_FONT);
@@ -78,7 +78,5 @@ public class MainScreen extends JFrame{
 
 
     }
-    public static void main(String[] args) {
-        new MainScreen("Manu","UI11");
-    }
+
 }
