@@ -87,22 +87,12 @@ public class AccountDetails extends JFrame {
         Account_Type.setBounds(210, 270, 600, 50);
         add(Account_Type);
 
-        JLabel Current_Balance_Label = new JLabel("Current Balance : ");
-        Current_Balance_Label.setFont(LABEL_DEFAULT_FONT);
-        Current_Balance_Label.setBounds(10, 320, 600, 50);
-        Current_Balance_Label.setForeground(Color.BLUE);
-        add(Current_Balance_Label);
-
-        JLabel Current_Balance = new JLabel(User_Details[3]);
-        Current_Balance.setFont(VALUE_DEFAULT_FONT);
-        Current_Balance.setBounds(220, 320, 600, 50);
-        add(Current_Balance);
 
         JButton Close_Button = new JButton("Close");
         Close_Button.addActionListener(e -> {
             new MainScreen(User_Details[0], User_ID);
         });
-        Close_Button.setBounds(350, 370, 100, 50);
+        Close_Button.setBounds(350, 350, 100, 50);
         Close_Button.setFont(LABEL_DEFAULT_FONT);
         Close_Button.addActionListener(e -> {
             setVisible(false);
@@ -117,7 +107,6 @@ public class AccountDetails extends JFrame {
         String Address = "";
         String Mobile_Number = "";
         String Account_Type = "";
-        String Amount = "";
 
         try {
             ResultSet UserTable = connection.statement.executeQuery("SELECT * FROM user_details WHERE user_id = '" + User_ID + "'");
@@ -125,10 +114,9 @@ public class AccountDetails extends JFrame {
                 Address = UserTable.getString("address");
                 Mobile_Number = UserTable.getString("mobile_number");
                 Account_Type = UserTable.getString("account_type");
-                Amount = "" + UserTable.getInt("amount");
             }
 
-            UserDetails = new String[]{Address, Mobile_Number, Account_Type, Amount};
+            UserDetails = new String[]{Address, Mobile_Number, Account_Type};
             connection.connection.close();
             UserTable.close();
         } catch (SQLException e) {
