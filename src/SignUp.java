@@ -148,7 +148,7 @@ public class SignUp extends JFrame implements ActionListener {
                     if(addUser()){ // closing the connection if user added successfully
                         try {
                             setVisible(false);
-                            new Confirmation(); // leading to confirmation page
+                            new Confirmation("Account created successfully"); // leading to confirmation page
                             connection.connection.close();
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);

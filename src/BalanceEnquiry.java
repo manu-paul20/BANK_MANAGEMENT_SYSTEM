@@ -39,7 +39,7 @@ public class BalanceEnquiry extends  JFrame{
 
 
         JTextField Password_Val  = new JTextField();
-        Password_Val.setBounds(120,85,300,25);
+        Password_Val.setBounds(150,85,300,25);
         Password_Val.setFont(VALUE_DEFAULT_FONT);
         add(Password_Val);
 

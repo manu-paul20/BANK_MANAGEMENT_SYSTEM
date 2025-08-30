@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class Confirmation extends JFrame {
     JButton nextButton = new JButton("Go to Login");
-    Confirmation(){
+    Confirmation(String Message){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         setLocation(600,200);
@@ -18,8 +18,8 @@ public class Confirmation extends JFrame {
         image.setBounds(100,0,300,300);
         add(image);
 
-        JLabel confirmationMessage = new JLabel("Account Created Successfully");
-        confirmationMessage.setBounds(80,300,500,50);
+        JLabel confirmationMessage = new JLabel(Message);
+        confirmationMessage.setBounds(50,300,500,50);
         confirmationMessage.setFont(new Font("arial black",Font.ITALIC,20));
         add(confirmationMessage);
 
