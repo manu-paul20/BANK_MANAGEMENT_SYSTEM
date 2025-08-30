@@ -121,7 +121,7 @@ public class Login extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE
                 );
             }else{
-                new MainScreen(result,user_id);
+                new MainScreen(result,user_id,password);
                 setVisible(false);
             }
         }
