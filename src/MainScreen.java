@@ -57,7 +57,7 @@ public class MainScreen extends JFrame{
         Transaction_Button.setBounds(500,150,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Transaction_Button.setBackground(Color.BLUE);
         Transaction_Button.setForeground(Color.white);
-        Transaction_Button.addActionListener(e->{new Transaction();});
+        Transaction_Button.addActionListener(e->{new Transaction(User_ID,Password);});
         add(Transaction_Button);
 
         Update_Account_Button.setFont(DEFAULT_BUTTON_FONT);
