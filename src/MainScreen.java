@@ -8,7 +8,7 @@ public class MainScreen extends JFrame{
     JButton Transaction_Button = new JButton("Withdraw / Deposit");
     JButton Delete_Account_Button = new JButton("Delete Account");
     JButton Update_Account_Button = new JButton("Update Account Details");
-    MainScreen(String User_Name,String User_ID){
+    MainScreen(String User_Name,String User_ID,String Password){
         Font DEFAULT_BUTTON_FONT = new Font("arial black",Font.BOLD,12);
         int DEFAULT_BUTTON_HEIGHT = 40;
         int DEFAULT_BUTTON_WIDTH = 200;
@@ -43,7 +43,7 @@ public class MainScreen extends JFrame{
         Balance_Enquiry_Button.setBounds(80,210,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Balance_Enquiry_Button.setBackground(Color.BLUE);
         Balance_Enquiry_Button.setForeground(Color.white);
-        Balance_Enquiry_Button.addActionListener(e->{new BalanceEnquiry();});
+        Balance_Enquiry_Button.addActionListener(e->{new BalanceEnquiry(User_ID,Password);});
         add(Balance_Enquiry_Button);
 
         Change_Password_Button.setFont(DEFAULT_BUTTON_FONT);
