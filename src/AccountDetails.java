@@ -89,9 +89,6 @@ public class AccountDetails extends JFrame {
 
 
         JButton Close_Button = new JButton("Close");
-        Close_Button.addActionListener(e -> {
-            new MainScreen(User_Details[0], User_ID);
-        });
         Close_Button.setBounds(350, 350, 100, 50);
         Close_Button.setFont(LABEL_DEFAULT_FONT);
         Close_Button.addActionListener(e -> {
