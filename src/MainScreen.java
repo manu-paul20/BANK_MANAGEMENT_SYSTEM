@@ -36,7 +36,7 @@ public class MainScreen extends JFrame{
         Account_Details_Button.setBounds(80,150,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Account_Details_Button.setBackground(Color.BLUE);
         Account_Details_Button.setForeground(Color.white);
-        Account_Details_Button.addActionListener(e -> {new AccountDetails("Manu",User_ID);});
+        Account_Details_Button.addActionListener(e -> {new AccountDetails(User_Name,User_ID);});
         add(Account_Details_Button);
 
         Balance_Enquiry_Button.setFont(DEFAULT_BUTTON_FONT);
@@ -57,7 +57,10 @@ public class MainScreen extends JFrame{
         Transaction_Button.setBounds(500,150,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Transaction_Button.setBackground(Color.BLUE);
         Transaction_Button.setForeground(Color.white);
-        Transaction_Button.addActionListener(e->{new Transaction(User_ID,Password);});
+        Transaction_Button.addActionListener(e->{
+            new Transaction(User_ID,Password);
+            setVisible(false);
+        });
         add(Transaction_Button);
 
         Update_Account_Button.setFont(DEFAULT_BUTTON_FONT);
