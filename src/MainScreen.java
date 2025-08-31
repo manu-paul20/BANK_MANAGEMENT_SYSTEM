@@ -67,7 +67,7 @@ public class MainScreen extends JFrame{
         Update_Account_Button.setBounds(500,210,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Update_Account_Button.setBackground(Color.BLUE);
         Update_Account_Button.setForeground(Color.white);
-        Update_Account_Button.addActionListener(e->{new UpdateAccount();});
+        Update_Account_Button.addActionListener(e->{new UpdateAccount(User_ID,User_Name);});
         add(Update_Account_Button);
 
         Delete_Account_Button.setFont(DEFAULT_BUTTON_FONT);
