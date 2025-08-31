@@ -176,7 +176,4 @@ public class UpdateAccount extends JFrame{
         }
     }
 
-    public static void main(String[] args) {
-        new UpdateAccount("hr35","Manu");
-    }
 }
