@@ -74,7 +74,7 @@ public class MainScreen extends JFrame{
         Delete_Account_Button.setBounds(500,270,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Delete_Account_Button.setBackground(Color.BLUE);
         Delete_Account_Button.setForeground(Color.white);
-        Delete_Account_Button.addActionListener(e->{new DeleteAccount();});
+        Delete_Account_Button.addActionListener(e->{new DeleteAccount(User_ID,Password);});
         add(Delete_Account_Button);
 
 
