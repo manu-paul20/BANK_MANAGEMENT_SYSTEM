@@ -31,7 +31,7 @@ public class MainScreen extends JFrame{
         Message.setForeground(Color.BLUE);
         add(Message);
 
-
+// all buttons
         Account_Details_Button.setFont(DEFAULT_BUTTON_FONT);
         Account_Details_Button.setBounds(80,150,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Account_Details_Button.setBackground(Color.BLUE);
