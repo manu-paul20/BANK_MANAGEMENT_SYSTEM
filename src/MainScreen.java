@@ -50,7 +50,10 @@ public class MainScreen extends JFrame{
         Change_Password_Button.setBounds(80,270,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Change_Password_Button.setBackground(Color.BLUE);
         Change_Password_Button.setForeground(Color.white);
-        Change_Password_Button.addActionListener(e->{new ChangePassword();});
+        Change_Password_Button.addActionListener(e->{
+            new ChangePassword(User_ID,Password);
+            setVisible(false);
+        });
         add(Change_Password_Button);
 
         Transaction_Button.setFont(DEFAULT_BUTTON_FONT);
@@ -67,14 +70,20 @@ public class MainScreen extends JFrame{
         Update_Account_Button.setBounds(500,210,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Update_Account_Button.setBackground(Color.BLUE);
         Update_Account_Button.setForeground(Color.white);
-        Update_Account_Button.addActionListener(e->{new UpdateAccount(User_ID,User_Name);});
+        Update_Account_Button.addActionListener(e->{
+            new UpdateAccount(User_ID,User_Name);
+            setVisible(false);
+        });
         add(Update_Account_Button);
 
         Delete_Account_Button.setFont(DEFAULT_BUTTON_FONT);
         Delete_Account_Button.setBounds(500,270,DEFAULT_BUTTON_WIDTH,DEFAULT_BUTTON_HEIGHT);
         Delete_Account_Button.setBackground(Color.BLUE);
         Delete_Account_Button.setForeground(Color.white);
-        Delete_Account_Button.addActionListener(e->{new DeleteAccount(User_ID,Password);});
+        Delete_Account_Button.addActionListener(e->{
+            new DeleteAccount(User_ID,Password);
+            setVisible(false);
+        });
         add(Delete_Account_Button);
 
 
