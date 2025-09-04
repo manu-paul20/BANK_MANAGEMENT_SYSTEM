@@ -123,8 +123,4 @@ public class Transaction extends JFrame{
             System.out.println(e);
         }
     }
-
-    public static void main(String[] args) {
-        new Transaction("hr35","aaa");
-    }
 }
